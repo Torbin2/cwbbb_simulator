@@ -1,6 +1,7 @@
 import pygame
 from sys import exit
 from tiles import Tiles
+from gameplay import Gameplay
 
 pygame.init()
 class Game:
@@ -10,14 +11,16 @@ class Game:
         self.clock = pygame.time.Clock()
 
         self.tiles = Tiles(self)
-
+        self.player = Gameplay()
     def run(self):
         while True:
-            for event in pygame.event.get():
+            events = pygame.event.get()
+            for event in events:
                 if event.type == pygame.QUIT:
                     pygame.quit
                     exit()
-            self.screen.fill("#584015")
+            self.player.planting(events)
+            self.screen.fill("#000000")
 
             self.tiles.draw()
 

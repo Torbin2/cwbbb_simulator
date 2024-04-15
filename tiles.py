@@ -1,21 +1,22 @@
 import pygame
-
+import random
 
 class Tiles:
     def __init__(self, game):
         self.game = game
-        self.tile_size = 100
-        self.tiles = {}
-        self.create_tiles()
-        self.colours = {
-            "corn": "#ad7e29",
-            "cabbage":"#15581e",
+        self.tile_size = 25
+        self.tiles = {
+            (2, 3): "#ffffff"
         }
-    
-    def create_tiles(self):
-        for x in range(10):
-            self.tiles[str(x) + ",0"] = {"plant": "corn", "pos":(x,0)}
+        possible = []
+        for x in range(32):
+            for y in range(16):
+                possible.append((x, y))
+        choices = random.choices(possible,k = 50)
+        for a in choices:
+            self.tiles[a] = '#' + hex(random.randrange(1<<(8*3)))[2:].zfill(6)
 
     def draw(self):
         for tile in self.tiles:
-            pygame.draw.rect(self.game.screen, self.colours[tile["plant"]], pygame.Rect(int(tile["pos"][0])*self.tile_size, int(tile["pos"][1])*self.tile_size, self.tile_size,self.tile_size))
+            x = pygame.Rect(int(tile[0])* self.tile_size, int(tile[1])* self.tile_size, self.tile_size, self.tile_size)
+            pygame.draw.rect(self.game.screen, self.tiles[tile], x)
