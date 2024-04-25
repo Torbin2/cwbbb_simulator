@@ -4,7 +4,6 @@ import random
 class Tiles:
     def __init__(self, game):
         self.game = game
-        self.tile_size = 25
         self.tiles = {
             (2, 3): "#ffffff"
         }
@@ -16,7 +15,7 @@ class Tiles:
         for a in choices:
             self.tiles[a] = '#' + hex(random.randrange(1<<(8*3)))[2:].zfill(6)
 
-    def draw(self, scroll):
+    def draw(self, scroll, tile_size = 25):
         for tile in self.tiles:
-            x = pygame.Rect(int(tile[0])* self.tile_size + scroll[0], int(tile[1])* self.tile_size + scroll[1], self.tile_size, self.tile_size)
+            x = pygame.Rect(int(tile[0])* tile_size + scroll[0], int(tile[1])* tile_size + scroll[1], tile_size, tile_size)
             pygame.draw.rect(self.game.screen, self.tiles[tile], x)
