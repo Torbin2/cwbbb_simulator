@@ -29,7 +29,7 @@ class Game:
             self.scroll = input.camera(keys, self.scroll)
             self.selected = input.select_crop(keys, self.selected)
 
-            mouse_pos, mouse_input = input.mouse(self.tile_size)
+            mouse_pos, mouse_input = input.mouse(self.tile_size, self.scroll)
             self.tiles.change_tiles(mouse_pos, mouse_input, self.selected)
 
             self.tiles.draw(self.scroll, self.tile_size)
