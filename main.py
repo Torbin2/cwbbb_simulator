@@ -6,11 +6,11 @@ import input
 pygame.init()
 class Game:
     def __init__(self):
-        self.screen = pygame.display.set_mode((800,400))
+        self.screen = pygame.display.set_mode((0,0), pygame.RESIZABLE)
         pygame.display.set_caption('cwbbb')
         self.clock = pygame.time.Clock()
         
-        self.tile_size = 25
+        self.tile_size = 50
         self.scroll = [0, 0]
         self.selected = "wheat"
 
@@ -31,6 +31,7 @@ class Game:
 
             mouse_pos, mouse_input = input.mouse(self.tile_size, self.scroll)
             self.tiles.change_tiles(mouse_pos, mouse_input, self.selected)
+            self.tiles.update_plants()
 
             self.tiles.draw(self.scroll, self.tile_size)
 

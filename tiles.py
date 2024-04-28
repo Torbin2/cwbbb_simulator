@@ -4,28 +4,42 @@ import random
 class Tiles:
     def __init__(self, game):
         self.game = game
+        self.timer = 0
         
         self.tiles = {}
         self.colour = {
             "wheat" : ("#e4d36f","#E4C76F",'#e4bb6f'),
-            "lemon" : ("#edfb0c","#Fbf10c, #fbd90c") ,         
+            "lemon" : ("#edfb0c","#Fbf10c", "#fbd90c") ,         
             "watermelon" : ('#5fce33',"#50ce33","#2f791e"),
         }
         
         possible = []
-        for x in range(32):
-            for y in range(16):
-                possible.append((x, y))
-        choices = random.choices(possible,k = 50)
+
+        blocks = 128
+        for x in range(blocks):
+            for y in range(blocks // 2):
+                possible.append((x-blocks // 2, y- blocks // 4))
+        choices = random.choices(possible,k = blocks * 2)
         for a in choices:
-            self.tiles[a] = {"type" : random.choice(tuple(self.colour.keys())), "age" : 0}
+            self.tiles[a] = {"type" : random.choice(tuple(self.colour.keys())), "age" : 0,"timer": 0}
         
 
     def change_tiles(self, mouse_pos,inputs, selected_crop):
         if inputs[0] and mouse_pos not in self.tiles:
-            self.tiles[mouse_pos] = {"type" : selected_crop, "age" : 0}
+            self.tiles[mouse_pos] = {"type" : selected_crop, "age" : 0, "timer": 0}
         if inputs[2] and mouse_pos in self.tiles:
             self.tiles.pop(mouse_pos)
+
+    def update_plants(self):
+        for plant in self.tiles:
+            if self.tiles[plant]["age"] != len(self.colour[self.tiles[plant]["type"]]) - 1:
+                self.tiles[plant]["timer"] += 1
+                if self.tiles[plant]["timer"] == 60:
+                    if random.randint(0,3) == 0:
+                        self.tiles[plant]["age"] +=1
+                    
+                    self.tiles[plant]["timer"] = 0
+                    
 
     def draw(self, scroll, tile_size = 25):
         for tile in self.tiles:
