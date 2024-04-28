@@ -1,6 +1,7 @@
 import pygame
 from sys import exit
 from tiles import Tiles
+from menu import Menu
 import input
 
 pygame.init()
@@ -15,6 +16,7 @@ class Game:
         self.selected = "wheat"
 
         self.tiles = Tiles(self)
+        self.menu = Menu(self.screen)
 
     def run(self):
         while True:
@@ -34,6 +36,7 @@ class Game:
             self.tiles.update_plants()
 
             self.tiles.draw(self.scroll, self.tile_size)
+            self.menu.draw(1)
 
             pygame.display.update()
             self.clock.tick(60)
