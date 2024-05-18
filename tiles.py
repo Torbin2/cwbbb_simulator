@@ -26,12 +26,19 @@ class Tiles:
 
     def change_tiles(self, mouse_pos,inputs, selected_crop, plants):
         if inputs[0] and mouse_pos not in self.tiles:
-            self.tiles[mouse_pos] = {"type" : selected_crop, "age" : 0, "timer": 0}
-        if inputs[2] and mouse_pos in self.tiles:
             try:
-                plants[self.tiles[mouse_pos]["type"]] += random.randint(1,3)
+                plants[self.tiles[mouse_pos]["type"]] -= 1
             except KeyError:
-                plants[self.tiles[mouse_pos]["type"]] = random.randint(1,3)
+                pass
+            self.tiles[mouse_pos] = {"type" : selected_crop, "age" : 0, "timer": 0}
+
+        if inputs[2] and mouse_pos in self.tiles:
+            #if self.tiles[mouse_pos]["age"] == len(self.colour[self.tiles[mouse_pos]["type"]]) - 1:
+            #use age to determin amount given
+            try:
+                plants[self.tiles[mouse_pos]["type"]] += random.randint(2,5)
+            except KeyError:
+                plants[self.tiles[mouse_pos]["type"]] = random.randint(2,5)
 
             self.tiles.pop(mouse_pos)
 
