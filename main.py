@@ -14,6 +14,7 @@ class Game:
         self.tile_size = 50
         self.scroll = [0, 0]
         self.selected = "wheat"
+        self.plants = {}
 
         self.tiles = Tiles(self)
         self.menu = Menu(self.screen)
@@ -32,11 +33,11 @@ class Game:
             self.selected = input.select_crop(keys, self.selected)
 
             mouse_pos, mouse_input = input.mouse(self.tile_size, self.scroll)
-            self.tiles.change_tiles(mouse_pos, mouse_input, self.selected)
+            self.plants = self.tiles.change_tiles(mouse_pos, mouse_input, self.selected, self.plants)
             self.tiles.update_plants()
 
             self.tiles.draw(self.scroll, self.tile_size)
-            self.menu.draw(1)
+            self.menu.draw(self.plants)
 
             pygame.display.update()
             self.clock.tick(60)
