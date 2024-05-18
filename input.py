@@ -15,13 +15,16 @@ def camera(keys, camera):
         camera[0] -=10
     return camera
 
-def select_crop(keys, selected):
-    if keys[pygame.K_1]:
-        selected = "wheat"
-    elif keys[pygame.K_2]:
-        selected = "lemon"
-    elif keys[pygame.K_3]:
-        selected = "watermelon"
+def select_crop(keys, selected, plants):
+    plant_keys = list(plants.keys())  
+    
+    if keys[pygame.K_1] and len(plant_keys) > 0:
+        selected = plant_keys[0]
+    elif keys[pygame.K_2] and len(plant_keys) > 1:
+        selected = plant_keys[1]
+    elif keys[pygame.K_3] and len(plant_keys) > 2:
+        selected = plant_keys[2]
+
     return selected
 
     

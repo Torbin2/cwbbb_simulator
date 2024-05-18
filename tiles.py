@@ -27,10 +27,12 @@ class Tiles:
     def change_tiles(self, mouse_pos,inputs, selected_crop, plants):
         if inputs[0] and mouse_pos not in self.tiles:
             try:
-                plants[self.tiles[mouse_pos]["type"]] -= 1
+                plants[selected_crop] -= 1
+                self.tiles[mouse_pos] = {"type" : selected_crop, "age" : 0, "timer": 0}
+                if plants[selected_crop] == 0:
+                    plants.pop(selected_crop)
             except KeyError:
                 pass
-            self.tiles[mouse_pos] = {"type" : selected_crop, "age" : 0, "timer": 0}
 
         if inputs[2] and mouse_pos in self.tiles:
             #if self.tiles[mouse_pos]["age"] == len(self.colour[self.tiles[mouse_pos]["type"]]) - 1:

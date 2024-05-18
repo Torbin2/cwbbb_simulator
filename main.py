@@ -30,7 +30,7 @@ class Game:
             self.screen.fill("#000000")
 
             self.scroll = input.camera(keys, self.scroll)
-            self.selected = input.select_crop(keys, self.selected)
+            self.selected = input.select_crop(keys, self.selected, self.plants)
 
             mouse_pos, mouse_input = input.mouse(self.tile_size, self.scroll)
             self.plants = self.tiles.change_tiles(mouse_pos, mouse_input, self.selected, self.plants)

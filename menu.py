@@ -11,6 +11,6 @@ class Menu:
         pygame.draw.rect(self.screen, self.colour, self.background)
         
         for num, plant in enumerate(plants):
-            score_display = self.font.render(f"{plant} : {plants[plant]}", False, ("#8f5a28"))
+            score_display = self.font.render(f"{num + 1}. {plant} : {plants[plant]}", False, ("#8f5a28"))
             score_rect = score_display.get_rect(midtop=(200, 0+ num*30))
             self.screen.blit(score_display, score_rect)
