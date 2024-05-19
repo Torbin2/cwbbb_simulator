@@ -24,6 +24,22 @@ def select_crop(keys, selected, plants):
         selected = plant_keys[1]
     elif keys[pygame.K_3] and len(plant_keys) > 2:
         selected = plant_keys[2]
+    elif keys[pygame.K_4] and len(plant_keys) > 3:
+        selected = plant_keys[3]
+    elif keys[pygame.K_5] and len(plant_keys) > 4:
+        selected = plant_keys[4]
+    elif keys[pygame.K_6] and len(plant_keys) > 5:
+        selected = plant_keys[5]
+    elif keys[pygame.K_6] and len(plant_keys) > 5: 
+        selected = plant_keys[5]
+    elif keys[pygame.K_7] and len(plant_keys) > 6: 
+        selected = plant_keys[6]
+    elif keys[pygame.K_8] and len(plant_keys) > 7: 
+        selected = plant_keys[7]
+    elif keys[pygame.K_9] and len(plant_keys) > 8: 
+        selected = plant_keys[8]
+    elif keys[pygame.K_0] and len(plant_keys) > 9: 
+        selected = plant_keys[9]
 
     return selected
 

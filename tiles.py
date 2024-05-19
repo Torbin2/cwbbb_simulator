@@ -8,9 +8,10 @@ class Tiles:
         
         self.tiles = {}
         self.colour = {
-            "wheat" : ("#e4d36f","#E4C76F",'#e4bb6f'),
-            "lemon" : ("#edfb0c","#Fbf10c", "#fbd90c") ,         
+            "wheat" : ("#e4d36f","#E4C76F", '#e4bb6f'), #change colour
+            "lemon" : ("#edfb0c","#d5e20b", "#bec90a", "#a6b008", "#8e9707") ,         
             "watermelon" : ('#5fce33',"#50ce33","#2f791e"),
+            "carrot" : ("#f9ba5f", "#f9b048", "#f8a631", "#F79c1a"),
         }
         
         possible = []
@@ -21,7 +22,7 @@ class Tiles:
                 possible.append((x-blocks // 2, y- blocks // 4))
         choices = random.choices(possible,k = blocks * 2)
         for a in choices:
-            self.tiles[a] = {"type" : random.choice(tuple(self.colour.keys())), "age" : 0,"timer": 0}
+            self.tiles[a] = {"type" : random.choice(tuple(self.colour.keys())), "age" : 2,"timer": 0} #age 2 is 3th colour
         
 
     def change_tiles(self, mouse_pos,inputs, selected_crop, plants):
@@ -35,12 +36,13 @@ class Tiles:
                 pass
 
         if inputs[2] and mouse_pos in self.tiles:
-            #if self.tiles[mouse_pos]["age"] == len(self.colour[self.tiles[mouse_pos]["type"]]) - 1:
-            #use age to determin amount given
-            try:
-                plants[self.tiles[mouse_pos]["type"]] += random.randint(2,5)
-            except KeyError:
-                plants[self.tiles[mouse_pos]["type"]] = random.randint(2,5)
+            #randint * (age²) / (posbl_age / 2) = randint * ((x^(2))/(1.5))
+            plant_amount = int(random.randint(1,3) * ((self.tiles[mouse_pos]["age"]**2) / (len(self.colour[self.tiles[mouse_pos]["type"]]) / 2 )))
+            if plant_amount != 0:
+                try:
+                    plants[self.tiles[mouse_pos]["type"]] += plant_amount
+                except KeyError:
+                    plants[self.tiles[mouse_pos]["type"]] = plant_amount
 
             self.tiles.pop(mouse_pos)
 
