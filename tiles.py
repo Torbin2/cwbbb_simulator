@@ -8,9 +8,9 @@ class Tiles:
         
         self.tiles = {}
         self.colour = {
-            "wheat" : ("#e4d36f","#E4C76F", '#e4bb6f'), #change colour
+            "wheat" : ("#c4b28f","#ddc8a1", '#f5deb3'), 
             "lemon" : ("#edfb0c","#d5e20b", "#bec90a", "#a6b008", "#8e9707") ,         
-            "watermelon" : ('#5fce33',"#50ce33","#2f791e"),
+            "watermelon" : ('#5fce33',"#50ce33",'#448635',"#2f791e", "#2a6d1b"),
             "carrot" : ("#f9ba5f", "#f9b048", "#f8a631", "#F79c1a"),
         }
         
@@ -36,7 +36,7 @@ class Tiles:
                 pass
 
         if inputs[2] and mouse_pos in self.tiles:
-            #randint * (age²) / (posbl_age / 2) = randint * ((x^(2))/(1.5))
+            #randint * (age²) / (posbl_age / 2)
             plant_amount = int(random.randint(1,3) * ((self.tiles[mouse_pos]["age"]**2) / (len(self.colour[self.tiles[mouse_pos]["type"]]) / 2 )))
             if plant_amount != 0:
                 try:

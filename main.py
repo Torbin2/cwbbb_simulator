@@ -37,7 +37,7 @@ class Game:
             self.tiles.update_plants()
 
             self.tiles.draw(self.scroll, self.tile_size)
-            self.menu.draw(self.plants)
+            self.menu.draw(self.plants, self.selected)
 
             pygame.display.update()
             self.clock.tick(60)
