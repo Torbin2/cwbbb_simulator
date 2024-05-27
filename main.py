@@ -10,8 +10,8 @@ class Game:
         self.screen = pygame.display.set_mode((0,0), pygame.RESIZABLE)
         pygame.display.set_caption('cwbbb')
         self.clock = pygame.time.Clock()
-        
-        self.tile_size = 50
+
+        self.tile_size = self.screen.get_width() // 28
         self.scroll = [0, 0]
         self.selected = "wheat"
         self.plants = {}
@@ -33,10 +33,11 @@ class Game:
             self.selected = input.select_crop(keys, self.selected, self.plants)
 
             if pygame.mouse.get_pos()[0] > self.screen.get_width() // 3.5: #plants editing
-                mouse_pos, mouse_input = input.mouse(self.tile_size, self.scroll)
+                mouse_pos, mouse_input = input.mouse_plantside(self.tile_size, self.scroll)
                 self.plants = self.tiles.change_tiles(mouse_pos, mouse_input, self.selected, self.plants)
             else:
-                self.menu.upgrade() #fix
+                selected_upgrade = 0
+                self.menu.upgrade(1) #fix
             
             self.tiles.update_plants()
 

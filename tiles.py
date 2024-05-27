@@ -12,6 +12,7 @@ class Tiles:
             "lemon" : ("#edfb0c","#d5e20b", "#bec90a", "#a6b008", "#8e9707") ,         
             "watermelon" : ('#5fce33',"#50ce33",'#448635',"#2f791e", "#2a6d1b"),
             "carrot" : ("#f9ba5f", "#f9b048", "#f8a631", "#F79c1a"),
+            "tuinkers" : ("#643e17", "#774a1c", "#8b5620","#9f6225","#b36f29" ,"#c77b2e", )
         }
         
         possible = []
