@@ -6,9 +6,13 @@ class Menu:
         self.colour = "#285d8f"
         self.screen = screen
         self.font = pygame.font.Font(("assets/pixel_font.ttf"), 25)
-        self.upgrades = {
-            "multiplier" : {"cost" : 0} #hmmm
+        self.upgrades = { #type upgrade : (currency, times bought, formula/ upgrade cost)
+            "multiplier" : ("wheat", 1, "self.upgrades['multiplier'][1]**2"), #x²
+            "speed" : ("carrot", 1, "self.upgrades['speed'][1]**2 / 2"),#x² / 2
         }
+
+    def upgrade(self, selected_upgrade):
+        pass #gebruik eval()
 
     def draw(self, plants, selected_plant):
         pygame.draw.rect(self.screen, self.colour, self.background)

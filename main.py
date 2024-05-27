@@ -32,8 +32,12 @@ class Game:
             self.scroll = input.camera(keys, self.scroll)
             self.selected = input.select_crop(keys, self.selected, self.plants)
 
-            mouse_pos, mouse_input = input.mouse(self.tile_size, self.scroll)
-            self.plants = self.tiles.change_tiles(mouse_pos, mouse_input, self.selected, self.plants)
+            if pygame.mouse.get_pos()[0] > self.screen.get_width() // 3.5: #plants editing
+                mouse_pos, mouse_input = input.mouse(self.tile_size, self.scroll)
+                self.plants = self.tiles.change_tiles(mouse_pos, mouse_input, self.selected, self.plants)
+            else:
+                self.menu.upgrade() #fix
+            
             self.tiles.update_plants()
 
             self.tiles.draw(self.scroll, self.tile_size)
