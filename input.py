@@ -4,8 +4,11 @@ def mouse_plantside(tile_size, scroll):
     location = ((pygame.mouse.get_pos()[0] - scroll[0]) // tile_size , (pygame.mouse.get_pos()[1] - scroll[1])// tile_size)  
     return location, mouse_input
 
-def mouse_upgrades():
-    pass
+def mouse_upgrades(plants):
+    mouse_input = pygame.mouse.get_pressed()
+    selected = (pygame.mouse.get_pos()[1] -len(plants)*30 - 25) // 64
+    return selected, mouse_input
+
 
 def camera(keys, camera):
     if keys[pygame.K_w]:
@@ -23,8 +26,7 @@ def select_crop(keys, selected, plants):
     for i in range(9):
         key = getattr(pygame, f'K_{i}')  
         if keys[key] and len(plant_keys) >= i:
-            selected = plant_keys[i - 1]
-    
+            selected = plant_keys[i - 1]  
     return selected
 
     
