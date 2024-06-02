@@ -27,7 +27,6 @@ class Menu:
 
 
     def draw(self, plants, selected_plant,      upgrades, selected_upgrade = -1):
-        print(upgrades)
         pygame.draw.rect(self.screen, self.colour, self.background)
         
         for num, plant in enumerate(plants):
@@ -47,10 +46,14 @@ class Menu:
             if num == selected_upgrade: pygame.draw.rect(self.screen, "#548124", backg_rect)  
             else: pygame.draw.rect(self.screen, "#5d8f28", backg_rect)
             
-            score_display = self.font.render(f"{upgrade}, type:{upgrades[upgrade][0]}", True, ("#8f285d"))
-            score_rect = score_display.get_rect(topleft=(0, backg_rect.top + 3))
+            score_display = self.font.render(f"{upgrade}, {upgrades[upgrade][0]}", True, ("#8f285d"))
+            score_rect = score_display.get_rect(topleft=(0, backg_rect.top - 1))
             self.screen.blit(score_display, score_rect)
 
             score_display = self.font.render(f"{eval(upgrades[upgrade][2])}", True, ("#8f285d"))
-            score_rect = score_display.get_rect(bottomright=(backg_rect.right, backg_rect.bottom - 3))
+            score_rect = score_display.get_rect(bottomright=(backg_rect.right, backg_rect.bottom))
+            self.screen.blit(score_display, score_rect)
+
+            score_display = self.font.render(f"{upgrades[upgrade][1]}", True, ("#8f285d"))
+            score_rect = score_display.get_rect(bottomleft=(backg_rect.left, backg_rect.bottom))
             self.screen.blit(score_display, score_rect)

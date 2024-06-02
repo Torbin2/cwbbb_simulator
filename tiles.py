@@ -26,7 +26,7 @@ class Tiles:
             self.tiles[a] = {"type" : random.choice(tuple(self.colour.keys())), "age" : 2,"timer": 0} #age 2 is 3th colour
         
 
-    def change_tiles(self, mouse_pos,inputs, selected_crop, plants):
+    def change_tiles(self, mouse_pos,inputs, selected_crop, plants, mult):
         if inputs[0] and mouse_pos not in self.tiles:
             try:
                 plants[selected_crop] -= 1
@@ -38,7 +38,7 @@ class Tiles:
 
         if inputs[2] and mouse_pos in self.tiles:
             #randint * (age²) / (posbl_age / 2)
-            plant_amount = int(random.randint(1,3) * ((self.tiles[mouse_pos]["age"]**2) / (len(self.colour[self.tiles[mouse_pos]["type"]]) / 2 )))
+            plant_amount = int(random.randint(1,3) * ((self.tiles[mouse_pos]["age"]**2) / (len(self.colour[self.tiles[mouse_pos]["type"]]) / 2 ))) * mult
             if plant_amount != 0:
                 try:
                     plants[self.tiles[mouse_pos]["type"]] += plant_amount
@@ -49,15 +49,26 @@ class Tiles:
 
         return plants
 
-    def update_plants(self):
+    def update_plants(self, speed_level, extra_grow_chance):
         for plant in self.tiles:
             if self.tiles[plant]["age"] != len(self.colour[self.tiles[plant]["type"]]) - 1:
                 self.tiles[plant]["timer"] += 1
-                if self.tiles[plant]["timer"] == 60:
-                    if random.randint(0,3) == 0:
-                        self.tiles[plant]["age"] +=1
+                
+                if self.tiles[plant]["timer"] >= 360 / speed_level: #1 min
+                    
+                    if random.randint(0, 10) >= 10 - extra_grow_chance:
+                        if random.randint(0, 100) >= 100 - extra_grow_chance:                    
+                            if random.randint(0, 10.000) >= 10.000 - extra_grow_chance:
+
+                                self.tiles[plant]["age"] = len(self.colour[self.tiles[plant]["type"]]) - 1
+                            else:self.tiles[plant]["age"] +=3                       
+                        else: self.tiles[plant]["age"] +=2
+                    else: self.tiles[plant]["age"] +1
                     
                     self.tiles[plant]["timer"] = 0
+                   
+                    if self.tiles[plant]["age"] > len(self.colour[self.tiles[plant]["type"]]) - 1:  #out of index fix
+                        self.tiles[plant]["age"] = len(self.colour[self.tiles[plant]["type"]]) - 1
                     
 
     def draw(self, scroll, tile_size = 25):
