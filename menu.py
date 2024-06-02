@@ -7,15 +7,27 @@ class Menu:
         self.colour = "#285d8f"
         self.screen = screen
         self.font = pygame.font.Font(("assets/generic.ttf"), 25)
-        self.upgrades = { #type upgrade : (currency, times bought, formula/ upgrade cost)
-            "multiplier" : ("wheat", 1, "self.upgrades['multiplier'][1]**2"), #x²
-            "speed" : ("carrot", 1, "self.upgrades['speed'][1]**2 / 2"),#x² / 2
-        }
 
-    def upgrade(self, selected_upgrade, mouse_input):
-        pass #gebruik eval()
 
-    def draw(self, plants, selected_plant, selected_upgrade = -1):
+        self.timer = 0 #fix
+
+    def upgrade(self, selected_upgrade, mouse_input, plants, upgrades):
+        self.timer +=1
+        try:
+            upgrade = tuple(upgrades.keys())[selected_upgrade]
+            if mouse_input[0] and self.timer >= 10:
+                if plants[upgrades[upgrade][0]] >= eval(upgrades[upgrade][2]):
+                    plants[upgrades[upgrade][0]] -= eval(upgrades[upgrade][2]) 
+                    upgrades[upgrade][1] += 1
+                    self.timer = 0
+        except (IndexError, KeyError ): pass
+
+        return upgrades
+        
+
+
+    def draw(self, plants, selected_plant,      upgrades, selected_upgrade = -1):
+        print(upgrades)
         pygame.draw.rect(self.screen, self.colour, self.background)
         
         for num, plant in enumerate(plants):
@@ -29,15 +41,16 @@ class Menu:
         #line
         pygame.draw.rect(self.screen, "#0E3050" ,pygame.Rect(0, len(plants)*30 + 10 , self.menu_len, 15))
 
-        for num, upgrade in enumerate(self.upgrades):
+        for num, upgrade in enumerate(upgrades):
             backg_rect = pygame.Rect(0, len(plants)*30 +25 +num*64, self.menu_len, 59)
-            if num == selected_upgrade: pygame.draw.rect(self.screen, "#41641c", backg_rect)  
+            
+            if num == selected_upgrade: pygame.draw.rect(self.screen, "#548124", backg_rect)  
             else: pygame.draw.rect(self.screen, "#5d8f28", backg_rect)
             
-            score_display = self.font.render(f"{upgrade}, type:{self.upgrades[upgrade][0]}", True, ("#8f285d"))
+            score_display = self.font.render(f"{upgrade}, type:{upgrades[upgrade][0]}", True, ("#8f285d"))
             score_rect = score_display.get_rect(topleft=(0, backg_rect.top + 3))
             self.screen.blit(score_display, score_rect)
 
-            score_display = self.font.render(f"{eval(self.upgrades[upgrade][2])}", True, ("#8f285d"))
+            score_display = self.font.render(f"{eval(upgrades[upgrade][2])}", True, ("#8f285d"))
             score_rect = score_display.get_rect(bottomright=(backg_rect.right, backg_rect.bottom - 3))
             self.screen.blit(score_display, score_rect)

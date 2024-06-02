@@ -17,6 +17,11 @@ class Game:
         self.selected_upgrade = -1
         self.plants = {}
 
+        self.upgrades = { #type upgrade : (currency, times bought, formula/ upgrade cost)
+            "multiplier" : ["wheat", 1, "int(upgrades['multiplier'][1]**2)"], #x²
+            "speed" : ["carrot", 1, "int(upgrades['speed'][1]**2 / 2)"],#x² / 2
+        }
+
         self.tiles = Tiles(self)
         self.menu = Menu(self.screen)
 
@@ -39,12 +44,12 @@ class Game:
                 self.selected_upgrade = -1 #resets selected upgrade
             else: #upgrade selection
                 self.selected_upgrade, mouse_input = input.mouse_upgrades(self.plants)
-                self.menu.upgrade(self.selected_upgrade, mouse_input)
+                self.upgrades = self.menu.upgrade(self.selected_upgrade, mouse_input, self.plants, self.upgrades)
             
             self.tiles.update_plants()
 
             self.tiles.draw(self.scroll, self.tile_size)
-            self.menu.draw(self.plants, self.selected_plant, self.selected_upgrade)
+            self.menu.draw(self.plants, self.selected_plant,  self.upgrades, self.selected_upgrade)
 
             pygame.display.update()
             self.clock.tick(60)

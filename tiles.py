@@ -31,7 +31,7 @@ class Tiles:
             try:
                 plants[selected_crop] -= 1
                 self.tiles[mouse_pos] = {"type" : selected_crop, "age" : 0, "timer": 0}
-                if plants[selected_crop] == 0:
+                if plants[selected_crop] <= 0:
                     plants.pop(selected_crop)
             except KeyError:
                 pass
