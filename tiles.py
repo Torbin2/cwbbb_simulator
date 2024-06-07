@@ -4,7 +4,7 @@ import random
 class Tiles:
     def __init__(self, game):
         self.game = game
-        self.timer = 0
+        self.harvester_timer = 0
         
         self.tiles = {}
         self.colour = {
@@ -26,7 +26,7 @@ class Tiles:
             self.tiles[a] = {"type" : random.choice(tuple(self.colour.keys())), "age" : 2,"timer": 0} #age 2 is 3th colour
         
 
-    def change_tiles(self, mouse_pos,inputs, selected_crop, plants, mult):
+    def change_tiles(self, mouse_pos,inputs, selected_crop, plants, mult,  auto_harvesters, harvest_timer):
         if inputs[0] and mouse_pos not in self.tiles:
             try:
                 plants[selected_crop] -= 1
@@ -47,9 +47,29 @@ class Tiles:
 
             self.tiles.pop(mouse_pos)
 
+        self.harvester_timer += 1
+        if self.harvester_timer == ((90)/(((1)/(40)) * harvest_timer)) +10: # fix
+            grown_plants = [i for i in self.tiles if self.tiles[i]["age"] == len(self.colour[self.tiles[i]["type"]]) - 1]
+            
+            if auto_harvesters > len(grown_plants): harvested = grown_plants
+            else: harvested = random.sample(grown_plants, k = auto_harvesters)
+            
+            for i in harvested:
+                plant_amount = int(random.randint(1,3) * ((self.tiles[i]["age"]**2) / (len(self.colour[self.tiles[i]["type"]]) / 2 ))) * mult
+                if plant_amount != 0:
+                    try:
+                        plants[self.tiles[i]["type"]] += plant_amount
+                    except KeyError:
+                        plants[self.tiles[i]["type"]] = plant_amount
+
+                self.tiles.pop(i)
+            self.harvester_timer = 0
+
         return plants
 
-    def update_plants(self, speed_level, extra_grow_chance):
+    def update_plants(self, speed_level, extra_grow_chance,):
+        
+
         for plant in self.tiles:
             if self.tiles[plant]["age"] != len(self.colour[self.tiles[plant]["type"]]) - 1:
                 self.tiles[plant]["timer"] += 1
@@ -58,7 +78,7 @@ class Tiles:
                     
                     if random.randint(0, 10) >= 10 - extra_grow_chance:
                         if random.randint(0, 100) >= 100 - extra_grow_chance:                    
-                            if random.randint(0, 10.000) >= 10.000 - extra_grow_chance:
+                            if random.randint(0, 10_000) >= 10_000 - extra_grow_chance:
 
                                 self.tiles[plant]["age"] = len(self.colour[self.tiles[plant]["type"]]) - 1
                             else:self.tiles[plant]["age"] +=3                       
@@ -69,7 +89,7 @@ class Tiles:
                    
                     if self.tiles[plant]["age"] > len(self.colour[self.tiles[plant]["type"]]) - 1:  #out of index fix
                         self.tiles[plant]["age"] = len(self.colour[self.tiles[plant]["type"]]) - 1
-                    
+        
 
     def draw(self, scroll, tile_size = 25):
         for tile in self.tiles:

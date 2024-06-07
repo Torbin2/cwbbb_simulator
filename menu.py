@@ -15,9 +15,9 @@ class Menu:
         self.timer +=1
         try:
             upgrade = tuple(upgrades.keys())[selected_upgrade]
-            if mouse_input[0] and self.timer >= 10:
+            if mouse_input[0] and self.timer >= 10 or mouse_input[2]:
                 if plants[upgrades[upgrade][0]] >= eval(upgrades[upgrade][2]):
-                    plants[upgrades[upgrade][0]] -= eval(upgrades[upgrade][2]) 
+                    plants[upgrades[upgrade][0]] -= eval(upgrades[upgrade][2])
                     upgrades[upgrade][1] += 1
                     self.timer = 0
         except (IndexError, KeyError ): pass
@@ -26,7 +26,7 @@ class Menu:
         
 
 
-    def draw(self, plants, selected_plant,      upgrades, selected_upgrade = -1):
+    def draw(self, plants, selected_plant, upgrades, selected_upgrade = -1):
         pygame.draw.rect(self.screen, self.colour, self.background)
         
         for num, plant in enumerate(plants):

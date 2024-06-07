@@ -19,6 +19,12 @@ def camera(keys, camera):
         camera[1] -=10
     if keys[pygame.K_d]:
         camera[0] -=10
+   
+    if keys[pygame.K_q]:
+        camera[0] +=50
+    if keys[pygame.K_e]:
+        camera[0] -=50
+    
     if keys[pygame.K_SPACE]:
         camera = [0,0]
     return camera
