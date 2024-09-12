@@ -21,8 +21,8 @@ class Game:
             "multiplier" : ["wheat", 1, "int(upgrades['multiplier'][1]**2)"], #x²
             "speed" : ["carrot", 1, "int(upgrades['speed'][1]**2 / 2)"],#x² / 2
             "extra growth" : ['watermelon', 1, 'int(((1)/(-0.1 * upgrades["extra growth"][1]))+11)' ], #1/-0.1x + 11
-            "auto harvest" : ["lemon", 0, "upgrades['auto harvest'][1] ** 3" ], # x³
-            "harvest timer" : ["lemon", 1, "4* upgrades['harvest timer'][1] " ]#4x
+            "auto harvest" : ["lemon", 0, "upgrades['auto harvest'][1] ** 3 + 1000" ], # x³ + 1000
+            "harvest timer" : ["lemon", 1, "2* upgrades['harvest timer'][1] " ]#2x
         }
         
         self.tiles = Tiles(self)

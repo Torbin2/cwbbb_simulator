@@ -48,7 +48,7 @@ class Tiles:
             self.tiles.pop(mouse_pos)
 
         self.harvester_timer += 1
-        if self.harvester_timer == ((90)/(((1)/(40)) * harvest_timer)) +10: # fix
+        if self.harvester_timer >= (3600 // harvest_timer) + 60:
             grown_plants = [i for i in self.tiles if self.tiles[i]["age"] == len(self.colour[self.tiles[i]["type"]]) - 1]
             
             if auto_harvesters > len(grown_plants): harvested = grown_plants
