@@ -53,6 +53,7 @@ class Game:
 
             self.tiles.draw(self.scroll, self.tile_size)
             self.menu.draw(self.plants, self.selected_plant,  self.upgrades, self.selected_upgrade)
+            self.menu.timer_func()
 
             pygame.display.update()
             self.clock.tick(60)

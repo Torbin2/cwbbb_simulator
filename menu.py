@@ -7,19 +7,25 @@ class Menu:
         self.colour = "#285d8f"
         self.screen = screen
         self.font = pygame.font.Font(("assets/generic.ttf"), 25)
-
-
+        
+        
+        self.timer_loc = (self.screen.get_width() /2, 5)
         self.timer = 0 #fix
+        self.last_buy = 0
 
     def upgrade(self, selected_upgrade, mouse_input, plants, upgrades):
-        self.timer +=1
+        
         try:
             upgrade = tuple(upgrades.keys())[selected_upgrade]
-            if mouse_input[0] and self.timer >= 10 or mouse_input[2]:
+            if mouse_input[0] and self.timer >= self.last_buy or mouse_input[2]:
                 if plants[upgrades[upgrade][0]] >= eval(upgrades[upgrade][2]):
                     plants[upgrades[upgrade][0]] -= eval(upgrades[upgrade][2])
                     upgrades[upgrade][1] += 1
-                    self.timer = 0
+                    self.last_buy = self.timer
+
+                    if selected_upgrade == 4 and upgrades[upgrade][1] == 0: #first autoharvester check
+                        print(self.timer)
+        
         except (IndexError, KeyError ): pass
 
         return upgrades
@@ -57,3 +63,10 @@ class Menu:
             score_display = self.font.render(f"{upgrades[upgrade][1]}", True, ("#8f285d"))
             score_rect = score_display.get_rect(bottomleft=(backg_rect.left, backg_rect.bottom))
             self.screen.blit(score_display, score_rect)
+
+    def timer_func(self):
+        self.timer +=1
+
+        timer_display = self.font.render(f"{self.timer}", True, ("white"))
+        timer_rect = timer_display.get_rect(midtop=(self.timer_loc))
+        self.screen.blit(timer_display, timer_rect)
